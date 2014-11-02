@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>Parking</h1>
+{% endblock %}
+
+{% block content %}
+<div id="res">
+	<p>Closest Parking spot: {{ address }}:</p>
+	<p>{{ price }}</p>
+</div>
+{% endblock %}
