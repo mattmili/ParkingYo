@@ -53,7 +53,7 @@ def yo():
     # address = get_parking_spot(latitude, longitude)
     # price = get_parking_price(ref)
     
-    link = "http://286b5603.ngrok.com/response?msg={0}&name={1}".format(
+    link = "https://aqueous-cove-8179.herokuapp.com/response?msg={0}&name={1}".format(
             '$3.50', '123 fake street')
     send_yo(username, link)
     return 'OK'
