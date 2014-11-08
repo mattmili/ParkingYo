@@ -4,6 +4,7 @@ import requests, urllib2, json, pprint
 import config
 
 YO_API = "https://api.justyo.co/yo/"
+callbackURL='https://yofindparking.herokuapp.com/'
 
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
@@ -86,7 +87,7 @@ def yo():
     parkingLotDistance=spot.distance
     parkingLotPrice=spot.price
 
-    link = config.callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(
+    link = callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(
         parkingLotName, parkingLotDistance, parkingLotPrice, parkingLotCity)
     send_yo(username, link)
     return 'OK'
