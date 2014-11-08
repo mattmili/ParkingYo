@@ -6,8 +6,6 @@ import config
 YO_API = "https://api.justyo.co/yo/"
 callbackURL='https://yofindparking.herokuapp.com'
 
-global pSpot
-
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
         self.city=city
@@ -40,7 +38,7 @@ def getJSONData(latitude, longitude, username):
             closestParkingLot['location_name'],
             closestParkingLot['available_spots'])
     
-    return pSpot
+        return pSpot
     
 def send_yo(username, link):
     """Yo a username"""
