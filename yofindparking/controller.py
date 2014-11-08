@@ -15,7 +15,7 @@ class parkingSpot:
         self.lotName=lotName
         self.availableSpots=spots
 
-def getJSONData(latitude, longitude, index):
+def getJSONData(latitude, longitude, username, index):
     lat=str(latitude)
     lng=str(longitude)
     url='http://api.parkwhiz.com/search/?lat='+lat+'&lng='+lng+'&key='+config.ParkWhizAPIKey
@@ -78,7 +78,7 @@ def yo():
     latitude = splitted[0]
     longitude = splitted[1]
     
-    spot = getJSONData(latitude, longitude, 0)
+    spot = getJSONData(latitude, longitude, username, 0)
     #spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
 
     parkingLotCity=spot.city
