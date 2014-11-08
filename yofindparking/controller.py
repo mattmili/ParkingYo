@@ -27,17 +27,16 @@ def getJSONData(latitude, longitude, username):
         closestParkingLot = data.items()[6][1][0]   
     except Exception:
         send_yo(username, 'http://yofindparking.herokuapp.com/noresult')
-    else:
-        spot = parkingSpot(
-            closestParkingLot['city'],
-            closestParkingLot['lat'], 
-            closestParkingLot['lng'],
-            closestParkingLot['price_formatted'], 
-            closestParkingLot['distance'],
-            closestParkingLot['location_name'],
-            closestParkingLot['available_spots'])
+    spot = parkingSpot(
+        closestParkingLot['city'], 
+        closestParkingLot['lat'], 
+        closestParkingLot['lng'],
+        closestParkingLot['price_formatted'], 
+        closestParkingLot['distance'],
+        closestParkingLot['location_name'],
+        closestParkingLot['available_spots'])
     
-        return spot
+    return spot
     
 def send_yo(username, link):
     """Yo a username"""
