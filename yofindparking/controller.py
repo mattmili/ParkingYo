@@ -34,6 +34,7 @@ def getJSONData(latitude, longitude, username):
         closestParkingLot['distance'],
         closestParkingLot['location_name'],
         closestParkingLot['available_spots'])
+    print pSpot
     return pSpot
     
 def send_yo(username, link):
