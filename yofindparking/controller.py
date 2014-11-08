@@ -1,17 +1,45 @@
 from yofindparking import app
 from flask import request, render_template
 import requests
+import parking
+import urllib2
+import json
+import pprint
 
 YO_API = "https://api.justyo.co/yo/"
 api_token = "e6263ea5-e7ed-4142-bc9c-54c07b41ecfe"
 
+class parkingSpot:
+    def __init__(self, lat, lng, cost, distance, lotName, spots):
+        self.lat=lat
+        self.lng=lng
+        self.price=cost
+        self.distance=distance
+        self.lotName=lotName
+        self.availableSpots=spots
 
-# def get_parking_spot(lat, lon):
+def getJSONData(latitude, longitude):
     
-
-# def get_parking_price(ref):
+    ParkWhizAPIKey='d9e934eabf61b48b4885179b1c37afd6'
+    # Simulated location for new york
+    lat=str(latitude)
+    lng=str(longitude)
+    url='http://api.parkwhiz.com/search/?lat='+lat+'&lng='+lng+'&key='+ParkWhizAPIKey
+    data = json.load(urllib2.urlopen(url))   
     
+    # Get the closest parking spot
+    closestParkingLot = data.items()[6][1][0]
 
+    spot = parkingSpot(
+        closestParkingLot['lat'], 
+        closestParkingLot['lng'],
+        closestParkingLot['price_formatted'], 
+        closestParkingLot['distance'],
+        closestParkingLot['location_name'],
+        closestParkingLot['available_spots'])
+    
+    return spot
+    
 def send_yo(username, link):
     """Yo a username"""
     requests.post(
@@ -37,9 +65,10 @@ def noresult():
 
 @app.route('/response')
 def response():
-    street_number = request.args.get('msg')
-    cost = request.args.get('name')
-    return render_template('response.html',address=street_number,price=cost)
+    name = request.args.get('name')
+    distance = request.args.get('distance')
+    cost = request.args.get('price')
+    return render_template('response.html',lotName=name,lotDistance=distance,lotPrice=cost)
 
 @app.route('/yo')
 def yo():
@@ -50,10 +79,14 @@ def yo():
     latitude = splitted[0]
     longitude = splitted[1]
     
-    # address = get_parking_spot(latitude, longitude)
-    # price = get_parking_price(ref)
-    
-    link = "https://aqueous-cove-8179.herokuapp.com/response?msg={0}&name={1}".format(
-            '$3.50', '123 fake street')
+    #spot = getJSONData(latitude, longitude)
+    spot = getJSONData(40.748183, -73.985064)
+
+    parkingLotName=spot.lotName
+    parkingLotDistance=spot.distance
+    parkingLotPrice=spot.price
+        
+    link = "http://5e96697a.ngrok.com/response?name={0}&distance={1}&price={2}".format(
+            parkingLotName, parkingLotDistance, parkingLotPrice)
     send_yo(username, link)
     return 'OK'
