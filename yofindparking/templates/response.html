@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block header %}
-<h1>Parking</h1>
 {% endblock %}
 
 {% block content %}
 <div id="res">
+	<p>City: {{ city }}</p>
 	<p>Closest Parking spot: {{ lotName }}</p>
 	<p>Price per hour: {{ lotPrice }}</p>
-	<p>Distance: {{ lotDistance }}</p>
+	<p>Distance: {{ lotDistance }} meters</p>
 	
-	<iframe width="1000" height="850" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=168%20Grove%20St%2C%20New%20Haven%2C%20CT%2006511%2C%20United%20States&destination=213%20Crown%20St%2C%20New%20Haven%2C%20CT%2006510%2C%20United%20States&key=AIzaSyDikVBtP4m7Qos3lQzsNqa7awKK4T3rCjs"></iframe>
+	<!-- <iframe width="1000" height="850" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=168%20Grove%20St%2C%20New%20Haven%2C%20CT%2006511%2C%20United%20States&destination=213%20Crown%20St%2C%20New%20Haven%2C%20CT%2006510%2C%20United%20States&key=AIzaSyDikVBtP4m7Qos3lQzsNqa7awKK4T3rCjs"></iframe> -->
 
 </div>
 {% endblock %}
