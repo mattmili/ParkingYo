@@ -17,6 +17,9 @@ class parkingSpot:
         self.availableSpots=spots
 
 def getJSONData(latitude, longitude, username):
+
+    global pSpot
+
     lat=str(latitude)
     lng=str(longitude)
     url='http://api.parkwhiz.com/search/?lat='+lat+'&lng='+lng+'&key='+config.ParkWhizAPIKey
@@ -25,18 +28,20 @@ def getJSONData(latitude, longitude, username):
         data = json.load(urllib2.urlopen(url))
         # Get the closest parking spot
         closestParkingLot = data.items()[6][1][0]   
-    except Exception:
-        send_yo(username, 'http://yofindparking.herokuapp.com/noresult')
-    spot = parkingSpot(
-        closestParkingLot['city'], 
-        closestParkingLot['lat'], 
-        closestParkingLot['lng'],
-        closestParkingLot['price_formatted'], 
-        closestParkingLot['distance'],
-        closestParkingLot['location_name'],
-        closestParkingLot['available_spots'])
+    except:
+        send_yo(username, callbackURL+'/noresult')
+        raise
+    else:
+        pSpot = parkingSpot(
+            closestParkingLot['city'], 
+            closestParkingLot['lat'], 
+            closestParkingLot['lng'],
+            closestParkingLot['price_formatted'], 
+            closestParkingLot['distance'],
+            closestParkingLot['location_name'],
+            closestParkingLot['available_spots'])
     
-    return spot
+    return pSpot
     
 def send_yo(username, link):
     """Yo a username"""
