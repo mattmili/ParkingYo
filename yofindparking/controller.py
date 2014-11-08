@@ -82,8 +82,10 @@ def yo():
     parkingLotName=spot.lotName
     parkingLotDistance=spot.distance
     parkingLotPrice=spot.price
-        
-    link = config.callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(
+    if parkingLotCity is None:
+        send_yo(username, 'http://yofindparkin.herokuapp.com/noresult')
+    else:   
+        link = config.callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(
             parkingLotName, parkingLotDistance, parkingLotPrice, parkingLotCity)
-    send_yo(username, link)
+        send_yo(username, link)
     return 'OK'
