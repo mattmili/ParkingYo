@@ -75,8 +75,8 @@ def yo():
     latitude = splitted[0]
     longitude = splitted[1]
     
-    #spot = getJSONData(latitude, longitude, 0)
-    spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
+    spot = getJSONData(latitude, longitude, 0)
+    #spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
 
     parkingLotCity=spot.city
     parkingLotName=spot.lotName
