@@ -5,6 +5,7 @@ import config
 
 YO_API = "https://api.justyo.co/yo/"
 callbackURL='https://yofindparking.herokuapp.com'
+#callbackURL='http://5e96697a.ngrok.com'
 
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
@@ -34,7 +35,6 @@ def getJSONData(latitude, longitude, username):
         data.items()[6][1][0]['distance'],
         data.items()[6][1][0]['location_name'],
         data.items()[6][1][0]['available_spots'])
-    print pSpot
     return pSpot
     
 def send_yo(username, link):
@@ -43,17 +43,14 @@ def send_yo(username, link):
         YO_API,
         data={'api_token': config.api_token, 'username': username, 'link': link})
 
-
 @app.route('/')
 def main():
     """Index Controller"""
     return render_template('index.html')
 
-
 @app.errorhandler(404)
 def handle_error(e):
     return render_template('404.html')
-
 
 @app.route('/noresult')
 def noresult():
@@ -83,10 +80,6 @@ def yo():
     if spot is None:
         send_yo(username, callbackURL+"/noresult")
     else:
-        link = callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(
-            spot.name, 
-            spot.distance, 
-            spot.price, 
-            spot.city)
+        link = callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(spot.lotName, spot.distance, spot.price, spot.city)
         send_yo(username, link)
     return 'OK'
