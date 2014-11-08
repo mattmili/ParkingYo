@@ -37,7 +37,7 @@ def getJSONData(latitude, longitude, username):
             closestParkingLot['location_name'],
             closestParkingLot['available_spots'])
     
-    return spot
+        return spot
     
 def send_yo(username, link):
     """Yo a username"""
