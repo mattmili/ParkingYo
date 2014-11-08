@@ -26,7 +26,8 @@ def getJSONData(latitude, longitude, username):
     data = json.load(urllib2.urlopen(url))
     # Get the closest parking spot
     send_yo(username, callbackURL+'/noresult')
-    pSpot = parkingSpot(closestParkingLot['city'], 
+    pSpot = parkingSpot(
+        data.items()[6][1][0]['city'], 
         data.items()[6][1][0]['lat'], 
         data.items()[6][1][0]['lng'],
         data.items()[6][1][0]['price_formatted'], 
