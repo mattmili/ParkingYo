@@ -2,6 +2,7 @@ from yofindparking import app
 from flask import request, render_template
 import requests, urllib2, json, pprint
 import config
+import unicodedata
 
 YO_API = "https://api.justyo.co/yo/"
 callbackURL='https://yofindparking.herokuapp.com'
@@ -9,13 +10,13 @@ callbackURL='https://yofindparking.herokuapp.com'
 
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
-        self.city=city
-        self.lat=lat
-        self.lng=lng
-        self.price=cost
-        self.distance=distance
-        self.lotName=lotName
-        self.availableSpots=spots
+        self.city=normalizeUnicode(city)
+        self.lat=str(lat)
+        self.lng=str(lng)
+        self.price=str(cost)
+        self.distance=str(distance)
+        self.lotName=normalizeUnicode(lotName)
+        self.availableSpots=str(spots)
 
 def getJSONData(latitude, longitude, username):
 
@@ -36,6 +37,9 @@ def getJSONData(latitude, longitude, username):
         data.items()[6][1][0]['location_name'],
         data.items()[6][1][0]['available_spots'])
     return pSpot
+
+def normalizeUnicode(string):
+    return unicodedata.normalize('NFKD', string).encode('ascii','ignore')
     
 def send_yo(username, link):
     """Yo a username"""
