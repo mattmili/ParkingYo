@@ -6,7 +6,6 @@ import unicodedata
 
 YO_API = "https://api.justyo.co/yo/"
 callbackURL='https://yofindparking.herokuapp.com'
-#callbackURL='http://5e96697a.ngrok.com'
 
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
@@ -78,8 +77,8 @@ def yo():
     latitude = splitted[0]
     longitude = splitted[1]
     
-    spot = getJSONData(latitude, longitude, username)
-    #spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
+    #spot = getJSONData(latitude, longitude, username)
+    spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
 
     if spot is None:
         send_yo(username, callbackURL+"/noresult")
