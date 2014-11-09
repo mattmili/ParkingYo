@@ -70,6 +70,7 @@ def response():
     parkinglat = request.args.get('parkinglat')
     userlng = request.args.get('userlong')
     userlat = request.args.get('userlat')
+    directionsUrl = "https://maps.google.com?saddr=Current+Location&daddr="+parkinglat+","+parkinglng
     return render_template('response.html',
         lotName = name,
         lotDistance = distance,
@@ -78,7 +79,8 @@ def response():
         pLat = parkinglat,
         pLong = parkinglng,
         uLat = userlat,
-        uLong = userlng
+        uLong = userlng,
+        directionsURL=directionsUrl
         )
 
 @app.route('/yo')

@@ -7,10 +7,10 @@
 <div id="res">
 	<p class="parkingInfo">CITY: {{ city }}</p>
 	<p class="parkingInfo">PARKING SPOT: {{ lotName }}</p>
-	<p class="parkingInfo">PRICE: {{ lotPrice }}</p>
+	<p class="parkingInfo">PRICE PER HOUR: {{ lotPrice }}</p>
 	<p class="parkingInfo">DISTANCE: {{ lotDistance }} meters</p>
 	
-	<a href="https://maps.google.com?saddr=Current+Location&daddr=43.12345,-76.12345">
+	<a href="{{ directionsURL }}">
 		<button class="directionsButton">GET DIRECTIONS</button>
 	</a>
 
