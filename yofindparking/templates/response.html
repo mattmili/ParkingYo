@@ -5,12 +5,15 @@
 
 {% block content %}
 <div id="res">
-	<p>City: {{ city }}</p>
-	<p>Closest Parking spot: {{ lotName }}</p>
-	<p>Price per hour: {{ lotPrice }}</p>
-	<p>Distance: {{ lotDistance }} meters</p>
+	<p class="parkingInfo">CITY: {{ city }}</p>
+	<p class="parkingInfo">PARKING SPOT: {{ lotName }}</p>
+	<p class="parkingInfo">PRICE: {{ lotPrice }}</p>
+	<p class="parkingInfo">DISTANCE: {{ lotDistance }} meters</p>
 	
-	<!-- <iframe width="1000" height="850" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?origin=168%20Grove%20St%2C%20New%20Haven%2C%20CT%2006511%2C%20United%20States&destination=213%20Crown%20St%2C%20New%20Haven%2C%20CT%2006510%2C%20United%20States&key=AIzaSyDikVBtP4m7Qos3lQzsNqa7awKK4T3rCjs"></iframe> -->
+	<a href="https://maps.google.com?saddr=Current+Location&daddr=43.12345,-76.12345">
+		<button class="directionsButton">GET DIRECTIONS</button>
+	</a>
+
 
 </div>
 {% endblock %}

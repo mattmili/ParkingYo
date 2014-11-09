@@ -5,7 +5,7 @@ import config
 import unicodedata
 
 YO_API = "https://api.justyo.co/yo/"
-callbackURL='https://yofindparking.herokuapp.com'
+callbackURL='http://6d2e2a50.ngrok.com'
 
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
@@ -66,7 +66,20 @@ def response():
     distance = request.args.get('distance')
     cost = request.args.get('price')
     city = request.args.get('city')
-    return render_template('response.html',lotName=name,lotDistance=distance,lotPrice=cost,city=city)
+    parkinglng = request.args.get('parkinglong')
+    parkinglat = request.args.get('parkinglat')
+    userlng = request.args.get('userlong')
+    userlat = request.args.get('userlat')
+    return render_template('response.html',
+        lotName = name,
+        lotDistance = distance,
+        lotPrice = cost,
+        city = city,
+        pLat = parkinglat,
+        pLong = parkinglng,
+        uLat = userlat,
+        uLong = userlng
+        )
 
 @app.route('/yo')
 def yo():
@@ -83,6 +96,15 @@ def yo():
     if spot is None:
         send_yo(username, callbackURL+"/noresult")
     else:
-        link = callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}".format(spot.lotName, spot.distance, spot.price, spot.city)
+        link = callbackURL+"/response?name={0}&distance={1}&price={2}&city={3}&parkinglong={4}&parkinglat={5}&userlong={6}&userlat={7}".format(
+            spot.lotName,
+            spot.distance, 
+            spot.price, 
+            spot.city,
+            spot.lng,
+            spot.lat,
+            str(latitude),
+            str(longitude)
+            )
         send_yo(username, link)
     return 'OK'
