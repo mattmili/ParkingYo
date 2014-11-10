@@ -5,8 +5,8 @@ import config
 import unicodedata
 
 YO_API = "https://api.justyo.co/yo/"
-callbackURL='http://6d2e2a50.ngrok.com'
-
+#callbackURL='http://6d2e2a50.ngrok.com'
+callbackURL='https://yofindparking.herokuapp.com'
 class parkingSpot:
     def __init__(self, city, lat, lng, cost, distance, lotName, spots):
         self.city=normalizeUnicode(city)
@@ -24,18 +24,22 @@ def getJSONData(latitude, longitude, username):
     url='http://api.parkwhiz.com/search/?lat='+lat+'&lng='+lng+'&key='+config.ParkWhizAPIKey
 
    
-    data = json.load(urllib2.urlopen(url))
+    load = json.load(urllib2.urlopen(url))
+    jsonData = load.items()[6][1][0]
     # Get the closest parking spot
-    send_yo(username, callbackURL+'/noresult')
-    pSpot = parkingSpot(
-        data.items()[6][1][0]['city'], 
-        data.items()[6][1][0]['lat'], 
-        data.items()[6][1][0]['lng'],
-        data.items()[6][1][0]['price_formatted'], 
-        data.items()[6][1][0]['distance'],
-        data.items()[6][1][0]['location_name'],
-        data.items()[6][1][0]['available_spots'])
-    return pSpot
+    if jsonData is None:
+        send_yo(username, callbackURL+'/noresult')
+        return "JSON data ERROR"
+    else:
+        pSpot = parkingSpot(
+            jsonData['city'], 
+            jsonData['lat'], 
+            jsonData['lng'],
+            jsonData['price_formatted'], 
+            jsonData['distance'],
+            jsonData['location_name'],
+            jsonData['available_spots'])
+        return pSpot
 
 def normalizeUnicode(string):
     return unicodedata.normalize('NFKD', string).encode('ascii','ignore')
@@ -89,11 +93,14 @@ def yo():
     username = request.args.get('username')
     location = request.args.get('location')
     splitted = location.split(';')
-    latitude = splitted[0]
-    longitude = splitted[1]
+    latitude = normalizeUnicode(splitted[0])
+    longitude = normalizeUnicode(splitted[1])
     
-    #spot = getJSONData(latitude, longitude, username)
-    spot = getJSONData(40.748183, -73.985064, 0) # for testing purposes
+    print type(latitude)
+    print type(longitude)
+
+    spot = getJSONData(latitude, longitude, username)
+    #spot = getJSONData(40.748183, -73.985064, username) # for testing purposes
 
     if spot is None:
         send_yo(username, callbackURL+"/noresult")
